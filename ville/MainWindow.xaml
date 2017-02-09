@@ -5,8 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ville"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Ville" Height="254.11" Width="464.27" ResizeMode="NoResize">
     <Grid>
-        
+        <Grid HorizontalAlignment="Left" Height="31" Margin="10,22,0,0" VerticalAlignment="Top" Width="352">
+            <Label x:Name="label" Content="Mac:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,1,0,0" Width="38"/>
+            <TextBox x:Name="macPartOne" HorizontalAlignment="Left" Height="23" Margin="43,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="macPartOne_TextChanged"/>
+            <TextBox x:Name="macPartTwo" HorizontalAlignment="Left" Height="23" Margin="149,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="macPartTwo_TextChanged"/>
+            <TextBox x:Name="macPartThree" HorizontalAlignment="Left" Height="23" Margin="96,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="macPartThree_TextChanged"/>
+            <TextBox x:Name="macPartFour" HorizontalAlignment="Left" Height="23" Margin="202,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="macPartFour_TextChanged"/>
+            <TextBox x:Name="macPartFive" HorizontalAlignment="Left" Height="23" Margin="255,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="macPartFive_TextChanged"/>
+            <TextBox x:Name="macPartSix" HorizontalAlignment="Left" Height="23" Margin="308,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="macPartSix_TextChanged"/>
+            <Label Content=":" HorizontalAlignment="Left" Margin="83,0,0,0" VerticalAlignment="Top" Height="30"/>
+            <Label Content=":" HorizontalAlignment="Left" Margin="136,1,0,0" VerticalAlignment="Top" Height="30"/>
+            <Label Content=":" HorizontalAlignment="Left" Margin="189,1,0,0" VerticalAlignment="Top" Height="30"/>
+            <Label Content=":" HorizontalAlignment="Left" Margin="242,1,0,0" VerticalAlignment="Top" Height="30"/>
+            <Label Content=":" HorizontalAlignment="Left" Margin="295,0,0,0" VerticalAlignment="Top" Height="30"/>
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="126" Margin="27,58,0,0" VerticalAlignment="Top" Width="183">
+            <Label Content="Pekantiedot" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="86">
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="0.61"/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="0.389"/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+            <Label Content="Ip" HorizontalAlignment="Left" Margin="0,36,0,0" VerticalAlignment="Top" Width="22"/>
+            <TextBox x:Name="petriIpTextBox" HorizontalAlignment="Left" Height="23" Margin="34,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="139" TextChanged="petriIpTextBox_TextChanged" />
+            <Label Content="Port" HorizontalAlignment="Left" Margin="0,65,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="petriPortTextBox" HorizontalAlignment="Left" Height="23" Margin="34,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="54" TextChanged="petriPortTextBox_TextChanged"/>
+            <Grid HorizontalAlignment="Left" Height="68" Margin="201,2,-233,0" VerticalAlignment="Top" Width="215">
+                <ComboBox x:Name="comPortSelect" HorizontalAlignment="Left" Margin="84,31,0,0" VerticalAlignment="Top" Width="124" />
+                <Label Content="COM Portti" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top"/>
+                <Label Content="Yhteys tiedot" HorizontalAlignment="Left" VerticalAlignment="Top" Width="95"/>
+            </Grid>
+        </Grid>
+        <Button x:Name="saveSettingsButton" Content="Tallenna" HorizontalAlignment="Left" Margin="27,189,0,0" VerticalAlignment="Top" Width="75" Click="saveSettingsButton_Click"/>
+
     </Grid>
 </Window>
