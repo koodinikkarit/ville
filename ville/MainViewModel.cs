@@ -10,91 +10,52 @@ using System.IO.Ports;
 namespace ville
 {
     class MainViewModel : INotifyPropertyChanged
-    {    
-
+    {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private SerialPort serialPort;
 
         public MainViewModel()
         {
-            //comPorts = new ObservableCollection<string>(SerialPort.GetPortNames());
+            comPorts = new ObservableCollection<string>(SerialPort.GetPortNames());
         }
+
+        private ConfigModel config;
+
+        public ConfigModel Config
+        {
+            get { return config; }
+            set {
+                config = value;
+                OnPropertyChanged("Config");
+            }
+        }
+
 
         private string selectedComPort;
 
         public string Selectedcomport
         {
             get { return selectedComPort; }
-            set { selectedComPort = value; }
+            set {
+                selectedComPort = value;
+                if (value != null && value != "")
+                {
+
+                    serialPort = new SerialPort(value);
+                    serialPort.DataReceived += SerialPort_DataReceived;
+                    serialPort.Open();
+                    
+                }
+            }
         }
 
-        private byte macPartOne;
-
-        public byte Macpartone
+        private void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            get { return macPartOne; }
-            set { macPartOne = value; }
+            SerialPort sp = (SerialPort)sender;
+            string data = sp.ReadExisting();
+            Config = new ConfigModel(data);
         }
-
-
-        private byte macPartTwo;
-
-        public byte Macparttwo
-        {
-            get { return macPartTwo; }
-            set { macPartTwo = value; }
-        }
-
-
-        private byte macPartThree;
-
-        public byte Macpartthree
-        {
-            get { return macPartThree; }
-            set { macPartThree = value; }
-        }
-
-        private byte macPartFour;
-
-        public byte Macpartfour
-        {
-            get { return macPartFour; }
-            set { macPartFour = value; }
-        }
-
-        private byte macPartFive;
-
-        public byte Macpartfive
-        {
-            get { return macPartFive; }
-            set { macPartFive = value; }
-        }
-
-        private byte macPartSix;
-
-        public byte Macpartsix
-        {
-            get { return macPartSix; }
-            set { macPartSix = value; }
-        }
-
-
-        private string petriIp;
-
-        public string Petriip
-        {
-            get { return petriIp; }
-            set { petriIp = value; }
-        }
-
-
-        private int petriPort;
-
-        public int Petriport
-        {
-            get { return petriPort; }
-            set { petriPort = value; }
-        }
-
 
         private ObservableCollection<string> comPorts;
 

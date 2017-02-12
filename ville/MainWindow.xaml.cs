@@ -21,12 +21,12 @@ namespace ville
     /// </summary>
     public partial class MainWindow : Window
     {
-        //MainViewModel mainViewModel = new MainViewModel();
+        MainViewModel mainViewModel = new MainViewModel();
         public MainWindow()
         {
             InitializeComponent();
-            Console.WriteLine(SerialPort.GetPortNames()[0]);
-            //this.DataContext = mainViewModel;
+            //Console.WriteLine(SerialPort.GetPortNames()[0]);
+            this.DataContext = mainViewModel;
         }
 
         private void macPartOne_TextChanged(object sender, TextChangedEventArgs e)
