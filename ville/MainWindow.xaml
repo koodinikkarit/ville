@@ -9,24 +9,18 @@
     <Grid>
         <Grid HorizontalAlignment="Left" Height="31" Margin="10,22,0,0" VerticalAlignment="Top" Width="352">
             <Label x:Name="label" Content="Mac:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,1,0,0" Width="38"/>
-            <TextBox x:Name="macPartOne" HorizontalAlignment="Left" Height="23" Margin="43,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40"
-                     TextChanged="macPartOne_TextChanged"
-                     Text="{Binding Path=Config.Macpartone, Mode=TwoWay}"/>
+            <TextBox x:Name="Macpartone" HorizontalAlignment="Left" Height="23" Margin="43,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40"
+                     Text="{Binding Path=Config.Macpartone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="config_changed"/>
             <TextBox x:Name="macPartTwo" HorizontalAlignment="Left" Height="23" Margin="149,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40"
-                     TextChanged="macPartTwo_TextChanged"
-                     Text="{Binding Path=Config.Macparttwo, Mode=TwoWay}"/>
+                     Text="{Binding Path=Config.Macparttwo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="config_changed"/>
             <TextBox x:Name="macPartThree" HorizontalAlignment="Left" Height="23" Margin="96,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40"
-                     TextChanged="macPartThree_TextChanged"
-                     Text="{Binding Path=Config.Macpartthree, Mode=TwoWay}"/>
+                     Text="{Binding Path=Config.Macpartthree, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="config_changed"/>
             <TextBox x:Name="macPartFour" HorizontalAlignment="Left" Height="23" Margin="202,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40"
-                     TextChanged="macPartFour_TextChanged"
-                     Text="{Binding Path=Config.Macpartfour, Mode=TwoWay}"/>
+                     Text="{Binding Path=Config.Macpartfour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="config_changed"/>
             <TextBox x:Name="macPartFive" HorizontalAlignment="Left" Height="23" Margin="255,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40"
-                     TextChanged="macPartFive_TextChanged"
-                     Text="{Binding Path=Config.Macpartfive, Mode=TwoWay}"/>
+                     Text="{Binding Path=Config.Macpartfive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="config_changed"/>
             <TextBox x:Name="macPartSix" HorizontalAlignment="Left" Height="23" Margin="308,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40"
-                     TextChanged="macPartSix_TextChanged"
-                     Text="{Binding Path=Config.Macpartsix, Mode=TwoWay}"/>
+                     Text="{Binding Path=Config.Macpartsix, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="config_changed"/>
             <Label Content=":" HorizontalAlignment="Left" Margin="83,0,0,0" VerticalAlignment="Top" Height="30"/>
             <Label Content=":" HorizontalAlignment="Left" Margin="136,1,0,0" VerticalAlignment="Top" Height="30"/>
             <Label Content=":" HorizontalAlignment="Left" Margin="189,1,0,0" VerticalAlignment="Top" Height="30"/>
@@ -46,22 +40,23 @@
             </Label>
             <Label Content="Ip" HorizontalAlignment="Left" Margin="0,36,0,0" VerticalAlignment="Top" Width="22"/>
             <TextBox HorizontalAlignment="Left" Height="23" Margin="34,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40"
-                     Text="{Binding Path=Config.Ippartone, Mode=TwoWay}"/>
+                     Text="{Binding Path=Config.Ippartone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="config_changed"/>
             <TextBox HorizontalAlignment="Left" Height="23" Margin="79,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40"
-                     Text="{Binding Path=Config.Ipparttwo, Mode=TwoWay}" />
+                     Text="{Binding Path=Config.Ipparttwo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="config_changed" />
             <TextBox HorizontalAlignment="Left" Height="23" Margin="124,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40"
-                     Text="{Binding Path=Config.Ippartthree, Mode=TwoWay}" />
+                     Text="{Binding Path=Config.Ippartthree, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="config_changed" />
             <TextBox HorizontalAlignment="Left" Height="23" Margin="169,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40"
-                     Text="{Binding Path=Config.Ippartfour, Mode=TwoWay}" />
+                     Text="{Binding Path=Config.Ippartfour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="config_changed" />
             <Label Content="Port" HorizontalAlignment="Left" Margin="0,65,0,0" VerticalAlignment="Top"/>
             <TextBox HorizontalAlignment="Left" Height="23" Margin="34,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="54"
-                     Text="{Binding Path=Config.Pekkaport, Mode=TwoWay}"/>
+                     Text="{Binding Path=Config.Pekkaport, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="config_changed"/>
             <Label x:Name="label1" Content="." HorizontalAlignment="Left" Margin="69,46,0,0" VerticalAlignment="Top" Height="22" Width="14" FontSize="9"/>
             <Label x:Name="label1_Copy1" Content="." HorizontalAlignment="Left" Margin="160,46,0,0" VerticalAlignment="Top" Height="22" Width="14" FontSize="9"/>
             <Label x:Name="label1_Copy2" Content="." HorizontalAlignment="Left" Margin="115,46,0,0" VerticalAlignment="Top" Height="22" Width="14" FontSize="9"/>
 
         </Grid>
-        <Button x:Name="saveSettingsButton" Content="Tallenna" HorizontalAlignment="Left" Margin="27,189,0,0" VerticalAlignment="Top" Width="75" Click="saveSettingsButton_Click"/>
+        <Button Content="Tallenna" HorizontalAlignment="Left" Margin="27,189,0,0" VerticalAlignment="Top" Width="75"
+                Click="saveSettingsButton_Click" IsEnabled="{Binding Path=Config.Changed, Mode=OneWay}"/>
         <Grid HorizontalAlignment="Right" Margin="0,58,-0.4,0" Width="215" Height="68" VerticalAlignment="Top">
             <ComboBox x:Name="comPortSelect" HorizontalAlignment="Left" Margin="84,31,0,0" VerticalAlignment="Top" Width="124" 
                           ItemsSource="{Binding Comports, Mode=OneWay}"

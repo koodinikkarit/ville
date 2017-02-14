@@ -29,49 +29,14 @@ namespace ville
             this.DataContext = mainViewModel;
         }
 
-        private void macPartOne_TextChanged(object sender, TextChangedEventArgs e)
+        private void config_changed(object sender, TextChangedEventArgs e)
         {
-
-        }
-
-        private void macPartThree_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void macPartTwo_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void macPartFive_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void macPartSix_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void macPartFour_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void petriIpTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void petriPortTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
+            
         }
 
         private void saveSettingsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            mainViewModel.sendUpdates();
         }
     }
 }
