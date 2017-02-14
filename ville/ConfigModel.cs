@@ -7,16 +7,8 @@ using System.ComponentModel;
 
 namespace ville
 {
-    class ConfigModel : INotifyPropertyChanged
+    class ConfigModel : INotifyPropertyChanged, ICloneable
     {
-        const byte REPORT_ALL_CONFIG = 1;
-        const int REPORT_PEKKA_IP = 2;
-        const int REPORT_PEKKA_PORT = 3;
-        const int REPORT_MAC = 4;
-        const byte PEKKA_IP = 5;
-        const byte PEKKA_PORT = 6;
-        const byte MAC = 7;
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ConfigModel()
@@ -35,40 +27,48 @@ namespace ville
             {
                 switch((byte)configs[i])
                 {
-                    case PEKKA_IP:
+                    case Commands.PEKKA_IP:
                         i++;
                         ipPartOne = (byte)configs[i];
+                        Ippartoneoriginal = (byte)configs[i];
                         i++;
-                        Ipparttwo = (byte)configs[i];
+                        ipPartTwo = (byte)configs[i];
+                        Ipparttwooriginal = (byte)configs[i];
                         i++;
-                        Ippartthree = (byte)configs[i];
+                        ipPartThree = (byte)configs[i];
+                        Ippartthreeoriginal = (byte)configs[i];
                         i++;
-                        Ippartfour = (byte)configs[i];
-                        //i++;
-
+                        ipPartFour = (byte)configs[i];
+                        Ippartfouroriginal = (byte)configs[i];
                         break;
-                    case PEKKA_PORT:
+                    case Commands.PEKKA_PORT:
                         int port = 0;
                         i++;
-                        port |= (configs[i] << 8);
+                        port |= (configs[i] << 8);                     
                         i++;
                         port |= configs[i];
-                        //i++;
-                        Pekkaport = port;
+                        pekkaPort = port;
+                        Pekkaportoriginal = port;
                         break;
-                    case MAC:
+                    case Commands.MAC:
                         i++;
-                        Macpartone = (byte)configs[i];
+                        macPartOne = (byte)configs[i];
+                        Macpartoneoriginal = (byte)configs[i];
                         i++;
-                        Macparttwo = (byte)configs[i];
+                        macPartTwo = (byte)configs[i];
+                        Macparttwooriginal = (byte)configs[i];
                         i++;
-                        Macpartthree = (byte)configs[i];
+                        macPartThree = (byte)configs[i];
+                        Macpartthreeoriginal = (byte)configs[i];
                         i++;
-                        Macpartfour = (byte)configs[i];
+                        macPartFour = (byte)configs[i];
+                        Macpartfouroriginal = (byte)configs[i];
                         i++;
-                        Macpartfive = (byte)configs[i];
+                        macPartFive = (byte)configs[i];
+                        Macpartfiveoriginal = (byte)configs[i];
                         i++;
-                        Macpartsix = (byte)configs[i];
+                        macPartSix = (byte)configs[i];
+                        Macpartsixoriginal = (byte)configs[i];
                         i++;                     
                         break;
                 }
@@ -92,15 +92,154 @@ namespace ville
             return true;
         }
 
+        public object Clone()
+        {
+            return new ConfigModel()
+            {
+                Macpartone = macPartOne,
+                Macparttwo = macPartTwo,
+                Macpartthree = macPartThree,
+                Macpartfour = macPartFour,
+                Macpartfive = macPartFive,
+                Macpartsix = macPartSix,
+                Ippartone = ipPartOne,
+                Ipparttwo = ipPartTwo,
+                Ippartthree = ipPartThree,
+                Ippartfour = ipPartFour,
+                Pekkaport = pekkaPort
+            };
+        }
 
 
+
+        private bool changed;
+
+        public bool Changed
+        {
+            get {
+                bool c = (
+                    macPartOne != Macpartoneoriginal ||
+                    macPartTwo != Macparttwooriginal ||
+                    macPartThree != Macpartthreeoriginal ||
+                    macPartFour != Macpartfouroriginal ||
+                    macPartFive != Macpartfiveoriginal ||
+                    macPartSix != Macpartsixoriginal ||
+                    ipPartOne != Ippartoneoriginal ||
+                    ipPartTwo != Ipparttwooriginal ||
+                    ipPartThree != Ippartthreeoriginal ||
+                    ipPartFour != Ippartfouroriginal ||
+                    pekkaPort != Pekkaportoriginal
+                );
+
+                return (
+                    macPartOne != Macpartoneoriginal ||
+                    macPartTwo != Macparttwooriginal ||
+                    macPartThree != Macpartthreeoriginal ||
+                    macPartFour != Macpartfouroriginal ||
+                    macPartFive != Macpartfiveoriginal ||
+                    macPartSix != Macpartsixoriginal ||
+                    ipPartOne != Ippartoneoriginal ||
+                    ipPartTwo != Ipparttwooriginal ||
+                    ipPartThree != Ippartthreeoriginal ||
+                    ipPartFour != Ippartfouroriginal ||
+                    pekkaPort != Pekkaportoriginal
+                );
+            }
+        }
+
+        public byte[] Changedmessage {
+            get
+            {
+                bytesToSend = 0;
+                byte[] message = new byte[12];
+                if (macPartOne != Macpartoneoriginal ||
+                    macPartTwo != Macparttwooriginal ||
+                    macPartThree != Macpartthreeoriginal ||
+                    macPartFour != Macpartfouroriginal ||
+                    macPartFive != Macpartfiveoriginal ||
+                    macPartFive != Macpartfiveoriginal ||
+                    macPartSix != Macpartsixoriginal)
+                {
+                    message[bytesToSend] = Commands.SET_MAC;
+                    bytesToSend++;
+                    message[bytesToSend] = macPartOne;
+                    bytesToSend++;
+                    message[bytesToSend] = macPartTwo;
+                    bytesToSend++;
+                    message[bytesToSend] = macPartThree;
+                    bytesToSend++;
+                    message[bytesToSend] = macPartFour;
+                    bytesToSend++;
+                    message[bytesToSend] = macPartFive;
+                    bytesToSend++;
+                    message[bytesToSend] = macPartSix;
+                    bytesToSend++;
+                }
+                if (ipPartOne != Ippartoneoriginal ||
+                    ipPartTwo != Ipparttwooriginal ||
+                    ipPartThree != Ippartthreeoriginal ||
+                    ipPartFour != Ippartfouroriginal)
+                {
+                    message[bytesToSend] = Commands.SET_PEKKA_IP;
+                    bytesToSend++;
+                    message[bytesToSend] = ipPartOne;
+                    bytesToSend++;
+                    message[bytesToSend] = ipPartTwo;
+                    bytesToSend++;
+                    message[bytesToSend] = ipPartThree;
+                    bytesToSend++;
+                    message[bytesToSend] = ipPartFour;
+                    bytesToSend++;
+                }
+                if (pekkaPort != Pekkaportoriginal)
+                {
+                    byte pekkaPortPart1 = (byte)(pekkaPort >> 8);
+                    byte pekkaPortPart2 = (byte)(pekkaPort & 0xff);
+                    message[bytesToSend] = Commands.SET_PEKKA_PORT;
+                    bytesToSend++;
+                    message[bytesToSend] = pekkaPortPart1;
+                    bytesToSend++;
+                    message[bytesToSend] = pekkaPortPart2;
+                    bytesToSend++;
+                }
+                return message;
+            }
+        }
+
+        private int bytesToSend;
+        public int Bytestosend { get
+            {
+                return bytesToSend;
+            }
+        }
+
+        public byte Macpartoneoriginal { get; set; }
+        public byte Macparttwooriginal { get; set; }
+        public byte Macpartthreeoriginal { get; set; }
+        public byte Macpartfouroriginal { get; set; }
+        public byte Macpartfiveoriginal { get; set; }
+        public byte Macpartsixoriginal { get; set; }
+        public byte Ippartoneoriginal { get; set; }
+        public byte Ipparttwooriginal { get; set; }
+        public byte Ippartthreeoriginal { get; set; }
+        public byte Ippartfouroriginal { get; set; }
+        public int Pekkaportoriginal { get; set; }
 
         private byte macPartOne;
 
         public byte Macpartone
         {
-            get { return macPartOne; }
-            set { macPartOne = value; }
+            get {
+                return macPartOne;
+            }
+            set {
+                if (macPartOne != value)
+                {
+                    macPartOne = value;
+                    OnPropertyChanged("Macpartone");
+                    OnPropertyChanged("Changed");
+                }
+            }
         }
 
 
@@ -109,7 +248,14 @@ namespace ville
         public byte Macparttwo
         {
             get { return macPartTwo; }
-            set { macPartTwo = value; }
+            set {
+                if (macPartTwo != value)
+                {
+                    macPartTwo = value;
+                    OnPropertyChanged("Macparttwo");
+                    OnPropertyChanged("Changed");
+                }
+            }
         }
 
 
@@ -118,7 +264,14 @@ namespace ville
         public byte Macpartthree
         {
             get { return macPartThree; }
-            set { macPartThree = value; }
+            set {
+                if (macPartThree != value)
+                {
+                    macPartThree = value;
+                    OnPropertyChanged("Macpartthree");
+                    OnPropertyChanged("Changed");
+                }
+            }
         }
 
         private byte macPartFour;
@@ -126,7 +279,14 @@ namespace ville
         public byte Macpartfour
         {
             get { return macPartFour; }
-            set { macPartFour = value; }
+            set {
+                if (macPartFour != value)
+                {
+                    macPartFour = value;
+                    OnPropertyChanged("Macpartfour");
+                    OnPropertyChanged("Changed");
+                }
+            }
         }
 
         private byte macPartFive;
@@ -134,7 +294,14 @@ namespace ville
         public byte Macpartfive
         {
             get { return macPartFive; }
-            set { macPartFive = value; }
+            set {
+                if (macPartFive != value)
+                {
+                    macPartFive = value;
+                    OnPropertyChanged("Macpartfive");
+                    OnPropertyChanged("Changed");
+                }
+            }
         }
 
         private byte macPartSix;
@@ -142,7 +309,14 @@ namespace ville
         public byte Macpartsix
         {
             get { return macPartSix; }
-            set { macPartSix = value; }
+            set {
+                if (macPartSix != value)
+                {
+                    macPartSix = value;
+                    OnPropertyChanged("Macpartsix");
+                    OnPropertyChanged("Changed");
+                }
+            }
         }
 
 
@@ -151,7 +325,14 @@ namespace ville
         public string Pekkaip
         {
             get { return pekkaIp; }
-            set { pekkaIp = value; }
+            set {
+                if (pekkaIp != value)
+                {
+                    pekkaIp = value;
+                    OnPropertyChanged("Pekkaip");
+                    OnPropertyChanged("Changed");
+                }
+            }
         }
 
         private byte ipPartOne;
@@ -160,8 +341,12 @@ namespace ville
         {
             get { return ipPartOne; }
             set {
-                ipPartOne = value;
-                OnPropertyChanged("Ippartone");
+                if (ipPartOne != value)
+                {
+                    ipPartOne = value;
+                    OnPropertyChanged("Ippartone");
+                    OnPropertyChanged("Changed");
+                }
             }
         }
 
@@ -170,7 +355,14 @@ namespace ville
         public byte Ipparttwo
         {
             get { return ipPartTwo; }
-            set { ipPartTwo = value; }
+            set {
+                if (ipPartTwo != value)
+                {
+                    ipPartTwo = value;
+                    OnPropertyChanged("Ipparttwo");
+                    OnPropertyChanged("Changed");
+                }
+            }
         }
 
 
@@ -179,7 +371,14 @@ namespace ville
         public byte Ippartthree
         {
             get { return ipPartThree; }
-            set { ipPartThree = value; }
+            set {
+                if (ipPartThree != value)
+                {
+                    ipPartThree = value;
+                    OnPropertyChanged("Ippartthree");
+                    OnPropertyChanged("Changed");
+                }
+            }
         }
 
 
@@ -188,7 +387,14 @@ namespace ville
         public byte Ippartfour
         {
             get { return ipPartFour; }
-            set { ipPartFour = value; }
+            set {
+                if (ipPartFour != value)
+                {
+                    ipPartFour = value;
+                    OnPropertyChanged("Ippartfour");
+                    OnPropertyChanged("Changed");
+                }
+            }
         }
 
         private int pekkaPort;
@@ -196,7 +402,14 @@ namespace ville
         public int Pekkaport
         {
             get { return pekkaPort; }
-            set { pekkaPort = value; }
+            set {
+                if (pekkaPort != value)
+                {
+                    pekkaPort = value;
+                    OnPropertyChanged("Pekkaport");
+                    OnPropertyChanged("Changed");
+                }
+            }
         }
 
         protected void OnPropertyChanged(string name)
