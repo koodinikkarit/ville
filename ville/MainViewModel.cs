@@ -31,7 +31,6 @@ namespace ville
             }
         }
 
-
         private string selectedComPort;
 
         public string Selectedcomport
@@ -44,8 +43,11 @@ namespace ville
 
                     serialPort = new SerialPort(value);
                     serialPort.DataReceived += SerialPort_DataReceived;
-                    serialPort.Open();
-                    
+                    while (serialPort.IsOpen == false) serialPort.Open();
+                    //serialPort.Open();
+                    byte[] message = new byte[1];
+                    message[0] = Commands.REPORT_ALL_CONFIG;
+                    serialPort.Write(message, 0, message.Length);
                 }
             }
         }
@@ -55,6 +57,16 @@ namespace ville
             SerialPort sp = (SerialPort)sender;
             string data = sp.ReadExisting();
             Config = new ConfigModel(data);
+        }
+
+        public void sendUpdates()
+        {
+            var c = config.Changedmessage;
+            while (serialPort.IsOpen == false) serialPort.Open();
+            serialPort.Write(config.Changedmessage, 0, config.Bytestosend);
+            //byte[] message = new byte[1];
+            //message[0] = Commands.SET_PEKKA_IP;
+            //serialPort.Write(message, 0, message.Length);
         }
 
         private ObservableCollection<string> comPorts;
